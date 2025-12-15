@@ -92,3 +92,25 @@ function handleReset(){
 
     contBtn.textContent = "Continue";
 }
+
+class Timer{
+    /**
+     * Constructor receives all required DOM elements.
+     * This makes the class reusable and testable.
+     */
+    constructor({ hrEl, minEl, secEl, contBtn, resetBtn }) {
+        /* ---------- DOM REFERENCES ---------- */
+        this.hrEl = hrEl;       // Hours input element
+        this.minEl = minEl;     // Minutes input element
+        this.secEl = secEl;     // Seconds input element
+        this.contBtn = contBtn; // Continue / Pause button
+        this.resetBtn = resetBtn; // Reset button
+
+        this.intervalId = null; // Stores setInterval ID
+        this.running = false;   // Tracks if timer is running
+
+        // event listeners
+        this.contBtn.addEventListener("click", () => this.toggle());
+        this.resetBtn.addEventListener("click", () => this.reset());
+    }
+}
