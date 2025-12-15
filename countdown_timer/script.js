@@ -196,4 +196,53 @@ class Timer{
         this.setTime(h, m, s);
     }
 
+    /**
+     * Starts the timer
+     */
+    start() {
+        // Prevent multiple intervals
+        if (this.running) return;
+
+        this.normalizeTime();
+        this.running = true;
+        this.contBtn.textContent = "Pause";
+
+        // Call tick every 1 second
+        this.intervalId = setInterval(() => this.tick(), 1000);
+    }
+
+    /**
+     * Pauses the timer
+     */
+    pause() {
+        this.running = false;
+        clearInterval(this.intervalId);
+        this.contBtn.textContent = "Continue";
+    }
+
+    /**
+     * Toggles between start and pause
+     */
+    toggle() {
+        this.running ? this.pause() : this.start();
+    }
+
+    /**
+     * Resets the timer to 00:00:00
+     */
+    reset() {
+        this.pause();
+        this.setTime(0, 0, 0);
+    }
+
 }
+
+// * TIMER INITIALIZATION
+// * Creates a Timer instance with DOM elements
+const timer = new Timer({
+    hrEl: document.querySelector(".hr"),
+    minEl: document.querySelector(".min"),
+    secEl: document.querySelector(".sec"),
+    contBtn: document.querySelector(".cont"),
+    resetBtn: document.querySelector(".reset"),
+});
